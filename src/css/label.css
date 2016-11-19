@@ -1,0 +1,62 @@
+@import url("http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css");
+
+.HeaderTitle{
+  text-align: center;
+  font-weight: bold;
+  color: #000000;
+  font-size: 2em;
+}
+div.transbox p {
+  text-align: center;
+  margin: 5%;
+  font-weight: bold;
+  color: #000000;
+  font-style: italic;
+  font-size: 2em;
+}
+
+.hero {
+    position: relative;
+    padding: 60px 0 60px 0;
+    height: 100px;
+    background: rgb(40, 70, 102) url('../img/greencitylife.jpg') no-repeat center center;
+    background-size: cover;
+    color: #fff;
+}
+.hero {
+    width: 100%;
+    height: 100%;
+}
+.greenCityLogo{
+  width: 256px;
+  height: 60px;
+   display: block;
+    margin-left: auto;
+    margin-right: auto 
+
+  }
+.imageclass{
+  height:200px;
+    background-color:#FFFFFF;
+    margin-top:10px;
+    overflow: hidden;
+}
+.img-enquiry{
+    height:100%;
+}
+hr.underline {
+    padding: 0;
+    border: none;
+    border-top: medium double #333;
+    color: #333;
+    text-align: center;
+}
+hr.underline:after {
+    content: "§";
+    display: inline-block;
+    position: relative;
+    top: -0.7em;
+    font-size: 1.5em;
+    padding: 0 0.25em;
+    background: white;
+}

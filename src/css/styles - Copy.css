@@ -1,0 +1,23 @@
+.img-feature-icon{
+    width: 90px;
+    height: 90px;
+    display: block;
+    margin: 0 auto;
+
+    border-top: 1em;
+    padding-top: 1em;
+    
+    border-bottom: 1em;
+}
+
+.each_content{
+    padding: 0 0 15px 15px;
+    text-align: center
+}
+
+.content-header {
+    margin: 0.67em 0;
+    font-size: 1.35em;
+    font-weight: bold;
+    text-align: center;
+}
