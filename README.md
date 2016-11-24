@@ -2,6 +2,7 @@
 Calendar System
 
 －－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+
 iPhone Chrome 无法导入Calendar的问题应该是无解的，可能因为Chrome没有权限。
 
 bug行：
@@ -12,6 +13,7 @@ header ( 'Content-Type: ' . $mime );
 无法将Content-Type设置为text/calendar
 
 网上帖子：
+
 http://stackoverflow.com/questions/15972628/ics-file-download-fails-on-iphone-chrome-with-unknown-file-type
 
 http://stackoverflow.com/questions/17681951/icalendar-transferred-with-text-calendar-mime-type
