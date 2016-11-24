@@ -376,7 +376,7 @@ function define_languages () {
     translate ( 'Basque' ) => 'Basque',
     translate ( 'Bulgarian' ) => 'Bulgarian',
     translate ( 'Catalan' ) => 'Catalan',
-    translate ( 'Chinese (Simplified/GB2312)' ) => 'Chinese-GB2312',
+    translate ( 'Chinese (Simplified)' ) => 'Chinese-utf8',
     translate ( 'Chinese (Traditional/Big5)' ) => 'Chinese-Big5',
     translate ( 'Croatian' ) . ' (UTF8)' => 'Croatian_utf8',
     translate ( 'Czech' ) => 'Czech',

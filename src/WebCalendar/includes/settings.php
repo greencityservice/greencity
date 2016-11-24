@@ -1,6 +1,6 @@
 <?php
-/* updated via install/index.php on Tue, 01 Nov 2016 01:34:43 -0400
-install_password: 36dbff3bd682e3935b5f788e7b4f7d04
+/* updated via install/index.php on Thu, 24 Nov 2016 05:55:39 -0500
+install_password: 21232f297a57a5a743894a0e4a801fc3
 db_type: mysql
 db_host: localhost:3306
 db_database: WebCalendar1234
