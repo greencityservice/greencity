@@ -25,6 +25,6 @@ http://primarypcsolutions.com/showthread.php?id=150637
 哪里导出是乱码来着？，忘记了，Android Chrome？
 可以试试：
 ```php 
-header ( 'Content-Type: text/calendar; charset=utf-8' . $mime );
+header ( 'Content-Type: text/calendar; charset=utf-8');
 ```
 桌面和iPhone的导出是正常的，所以应该不关数据库的事。
