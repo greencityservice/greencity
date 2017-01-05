@@ -174,10 +174,17 @@ function myOnLoad () {
   document.login_form.login.focus ();
   <?php
     if ( ! empty ( $login ) ) echo "document.login_form.login.select();";
-    if ( ! empty ( $error ) ) {
-      echo "  alert ( \"$error\" );\n";
-    }
+    // if ( ! empty ( $error ) ) {
+    //   echo "  alert ( \"$error\" );\n";
+    // }
   ?>
+  $('.message .close')
+  .on('click', function() {
+    $(this)
+      .closest('.message')
+      .transition('fade')
+    ;
+  });
 }
 </script>
 <?php
@@ -187,13 +194,26 @@ function myOnLoad () {
 
   echo '<link rel="stylesheet" type="text/css" href="css_cacher.php?login=__public__'
 	 . $csscache . '" />';
-  echo('<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">');
+  //echo('<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">');
+  echo('<link rel="stylesheet" href="semantic-ui/semantic.min.css">
+    ');
+  echo('<script src="jQuery/jquery-3.1.1.min.js"></script>
+    ');
+  echo('<script src="semantic-ui/semantic.min.js"></script>
+    ');
 
  // Print custom header (since we do not call print_header function)
  if ( ! empty ( $CUSTOM_SCRIPT ) && $CUSTOM_SCRIPT == 'Y' ) {
    echo load_template ( $login, 'S' );
  }
 ?>
+
+<style type="text/css">
+    .column {
+      max-width: 450px;
+    }
+  </style>
+
 </head>
 <body id="login" <?php if ( ! $logout ) { ?>onload="myOnLoad();"<?php } ?>>
 <?php
@@ -203,64 +223,65 @@ if ( ! empty ( $CUSTOM_HEADER ) && $CUSTOM_HEADER == 'Y' ) {
 }
 ?>
 
-<img style="height:60px; width:100px" src="images/gclogo.png" alt="Login" /></td><td align="right">
-
-<?php
-if ( ! empty ( $error ) ) {
-  echo '<span style="color:#FF0000; font-weight:bold;">' .
-    translate ( 'Error' ) . ": $error</span><br />\n";
-} else {
-  echo "<br />\n";
-}
-
-if ( $logout ) {
-  echo '<p>' . translate ( 'You have been logged out.' ) . ".</p>\n";
-  echo "<br /><br />\n";
-  echo '<a href="login.php' .
-    ( ! empty ( $return_path ) ?
-      '?return_path=' . htmlentities ( $return_path ) : '' ) .
-    '" class="nav">' . translate ( 'Login' ) .
-    "</a><br /><br /><br />\n";
-}
-
-if ( ! $logout ) {
-?>
-<form name="login_form" id="login" action="login.php" method="post"
+<div class="ui middle aligned center aligned grid">
+  <div class="column">
+    <h2 class="ui teal image header">
+      <img style="height:60px; width:100px" src="images/gclogo.png" alt="Login" class="image"/>
+      <div class="content">
+        Log-in to your account
+      </div>
+    </h2>
+    <form class="ui large form" name="login_form" id="login" action="login.php" method="post"
   onsubmit="return valid_form( this )">
 
 <?php
+if ( ! empty ( $error ) ) {
+  echo '<div class="ui negative message"><i class="close icon"></i>'.$error.'</div>';
+}
+
+if ( $logout ) {
+  echo '<div class="ui negative message"><i class="close icon"></i>'.translate ( 'You have been logged out.' ).'</div>';
+}
+?>
+
+  <?php
 if ( ! empty ( $return_path ) ) {
   echo '<input type="hidden" name="return_path" value="' .
     htmlentities ( $return_path ) . '" />' . "\n";
 }
 ?>
-
-<table align="center" cellspacing="10" cellpadding="10">
-<tr><td class="aligncenter">
- 
- <label for="user"><?php etranslate ( 'Username' )?>:</label></td><td>
- <input name="login" id="user" size="15" maxlength="25"
+      <div class="ui stacked segment">
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="user icon"></i>
+            <input type="text" name="login" id="user" size="15" maxlength="25"
    value="<?php if ( ! empty ( $last_login ) ) echo $last_login;?>"
-   tabindex="1" />
-</td></tr>
-<tr><td class="aligncenter">
- <label for="password"><?php etranslate ( 'Password' )?>:</label></td><td>
- <input name="password" id="password" type="password" size="15"
-   maxlength="30" tabindex="2" />
-</td></tr>
-<tr><td colspan="3" style="font-size: 10px;">
- <input type="checkbox" name="remember" id="remember" tabindex="3"
+   tabindex="1" placeholder="<?php etranslate ( 'Username' )?>">
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="lock icon"></i>
+            <input name="password" id="password" type="password" size="15"
+   maxlength="30" tabindex="2" placeholder="<?php etranslate ( 'Password' )?>">
+          </div>
+        </div>
+        <div class="field">
+        <div class="ui checkbox">
+        <input type="checkbox" name="remember" id="remember" tabindex="3"
    value="yes" <?php if ( ! empty ( $remember ) && $remember == 'yes' ) {
      echo 'checked="checked"'; }?> /><label for="remember">&nbsp;
-   <?php etranslate ( 'Save login via cookies so I dont have to login next time.' )?></label>
-</td></tr>
-<tr><td colspan="4" class="aligncenter">
- <input type="submit" value="<?php etranslate ( 'Login' )?>" tabindex="4" />
-</td></tr>
-</table>
-</form>
+   <?php etranslate ( 'Remember me' )?></label>
+        </div>
+        </div>
+        <input type="submit" class="ui fluid large teal submit button" tabindex="4" value="<?php etranslate ( 'Login' )?>">
+      </div>
+    </form>
 
-<?php }
+  </div>
+</div>
+
+<?php
 
 if ( ! empty ( $PUBLIC_ACCESS ) && $PUBLIC_ACCESS == 'Y' ) { ?>
  <br /><br />
