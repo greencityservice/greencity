@@ -50,9 +50,9 @@ Save: 保存
 Public Access: 公共的
 Admin: 管理
 Calendar: 日历
-Public: 公众的
-Confidential: 机密的
-Private: 私人的
+Public: 公开
+Confidential: 保密
+Private: 私人
 
 ########################################
 # Page: activity_log.php
@@ -66,6 +66,22 @@ Previous: 前一页
 confidential: 机密的
 private: 私人的
 Error adding event: 添加事件错误
+
+########################################
+# 2017年1月21日补充
+#
+Copy entry: 复制事件
+Location: 地点
+Home: 首页
+This Week: 本周
+This Month: 本月
+This Year: 今年
+Events: 事件管理
+Add New Event: 添加新事件
+Delete Entries: 删除事件
+Unapproved Entries: 未批准事件
+System Log: 系统日志
+Security Audit: 安全审计
 
 ########################################
 # Page: admin.php
@@ -379,12 +395,12 @@ You have not entered a password.: 您没有输入密码
 ########################################
 # Page: export.php
 #
-Export: 输出
-Export format: 输出格式
-Export all dates: 输出所有资料
+Export: 导出事件
+Export format: 导出格式
+Export all dates: 导出所有日期
 Start date: 开始日期
 End date: 结束日期
-Modified since: 更改自
+Modified since: 上次修改
 
 ########################################
 # Page: export_handler.php
@@ -438,7 +454,7 @@ Repeat Day: 重复于
 ########################################
 # Page: help_import.php
 #
-Import: 输入
+Import: 导入事件
 Palm Desktop: Palm 桌面
 Enabling: 正在打开
 
