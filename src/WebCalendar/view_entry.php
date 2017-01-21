@@ -437,9 +437,11 @@ if ( ! empty ( $ALLOW_HTML_DESCRIPTION ) && $ALLOW_HTML_DESCRIPTION == 'Y' ) {
 */
 
  echo '
+ <div class="ui two column middle aligned very relaxed stackable grid">
+ <div class="column">
     <table class="ui defination table">
       <tr>
-        <td class="aligntop bold two wide column">' . translate ( 'Description' )
+        <td class="aligntop bold">' . translate ( 'Description' )
  . ':</td>
         <td>';
 
@@ -993,6 +995,55 @@ EOT;
 
 echo '
     </table>
+    </div>
+    <div class="column">
+      <div style="">
+        <div id="map" style="max-width:400px;height:400px;"></div>  
+        </div>
+    </div>
+
+    </div>
+    
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRcQ7L8uEzr9RCt6jXMlyK5qvl4q0RCAk&callback=initMap">
+    </script>
+  <script>
+    var geocoder;
+  var map;
+  function initMap() {
+    var address = "'.(( $DISABLE_LOCATION_FIELD != 'Y' && ! empty ( $location ))?$location:'').'";
+    if (address == "")
+    {
+      $("#map").hide();
+    }
+    else
+    {
+      geocoder = new google.maps.Geocoder();
+      var latlng = new google.maps.LatLng(-37.8136280, 144.9630580);
+      var mapOptions = {
+        zoom: 15,
+        center: latlng
+      }
+      map = new google.maps.Map(document.getElementById("map"), mapOptions);
+      codeAddress(address);
+    }
+  }
+
+  function codeAddress(address) {
+    //var address = document.getElementById("address").value;
+    geocoder.geocode( { "address": address}, function(results, status) {
+      if (status == "OK") {
+        map.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location
+        });
+      } else {
+        //alert("Geocode was not successful for the following reason: " + status);
+      }
+    });
+  }
+</script>
     <div class="ui horizontal divider">Action</div>
     ';
 
