@@ -211,7 +211,14 @@ function print_header ( $includes = '', $HeadX = '', $BodyX = '',
      /* TODO: single-user mode, etc. */
      . ( $login != '__public__' ? '?user=' . $login : '' ) . '" />' : '' ) . '
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />'
-   . ( $MENU_ENABLED == 'Y' ? $menuScript : '' ) . '
+   . ( $MENU_ENABLED == 'Y' ? $menuScript : '' );
+   echo('<link rel="stylesheet" href="semantic-ui/semantic.min.css">
+    ');
+  echo('<script src="jQuery/jquery-3.1.1.min.js"></script>
+    ');
+  echo('<script src="semantic-ui/semantic.min.js"></script>
+    ');
+  echo '
   </head>
   <body'
   // Determine the page direction (left-to-right or right-to-left).

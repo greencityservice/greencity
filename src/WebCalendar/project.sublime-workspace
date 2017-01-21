@@ -1,0 +1,264 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"emplo",
+				"employee_id"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "view_entry.php",
+			"settings":
+			{
+				"buffer_size": 41978,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 87.0,
+		"last_filter": "install",
+		"selected_items":
+		[
+			[
+				"install",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = 'df21e130d211cfc94d9b0905775a7c0f' + '1e3d39e33b79698005270310898eea76'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/chengchang/greencity/src/WebCalendar"
+	],
+	"file_history":
+	[
+		"/Users/chengchang/Desktop/login.php",
+		"/Users/chengchang/Desktop/tmp.html",
+		"/Users/chengchang/greencity/src/index.html",
+		"/Users/chengchang/greencity/src/WebCalendar/includes/settings.php",
+		"/Users/chengchang/greencity/src/WebCalendar/translations/English-US.txt",
+		"/Users/chengchang/Downloads/WebCalendar_SQL_1209",
+		"/Users/chengchang/greencity/src/WebCalendar/includes/config.php",
+		"/Users/chengchang/greencity/src/WebCalendar/export_handler.php",
+		"/Users/chengchang/greencity/src/WebCalendar/controlpanel.php",
+		"/Applications/iTools Pro.app/Contents/Resources/zh-Hans.lproj/iTools_string.json",
+		"/Users/chengchang/Downloads/edc-p2/edc_Fsa/_classpath.xml",
+		"/Users/chengchang/Downloads/edc-p2/edc_Fsa/_project.xml",
+		"/Users/chengchang/UKCOIN/sql/ukcoins_20160905.sql",
+		"/Users/chengchang/Downloads/Task 5.3",
+		"/Users/chengchang/Downloads/PY 5.1 - Answers",
+		"/Users/chengchang/Downloads/xiong/test.sh",
+		"/Users/chengchang/Downloads/xiong/smshv1.c",
+		"/Users/chengchang/Workspace/GuessWord/dictionaries/chn.txt",
+		"/Users/chengchang/Workspace/GuessWord/README.md",
+		"/Users/chengchang/Workspace/GuessWord/bin/META-INF/MANIFEST.MF",
+		"/Users/chengchang/sakila-backup.sql",
+		"/Users/chengchang/Workspace/GuessWord/chn.txt",
+		"/Users/chengchang/Downloads/电子书籍/MySQL/create_function.sql",
+		"/Users/chengchang/Downloads/电子书籍/MySQL/create_function",
+		"/Users/chengchang/test/Makefile_old",
+		"/Users/chengchang/Downloads/9781430265320/ch02/build.gradle",
+		"/Users/chengchang/Downloads/9781430265320/build.gradle",
+		"/Users/chengchang/Workspace/HelloWorldSpring/build/reports/tests/index.html",
+		"/Users/chengchang/Dev/HelloWorldSpring/build.gradle",
+		"/Users/chengchang/Dev/JUnit Test Report Html Page/Gradle JUnit Test Report Html Page.html",
+		"/Users/chengchang/Dev/JUnit Test Report Html Page/Gradle JUnit Test Report Html Page"
+	],
+	"find":
+	{
+		"height": 23.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			"/Users/chengchang/greencity/src/WebCalendar"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"o '\n      <li><a title=\"' . $approveStr . '\" class=\"nav\" href=\"approve_entry.php?id='\n   . $id . $u_url . '&amp;type=E\" onclick=\"return confirm( \\''\n   . translate ( 'Approve this entry?', true ) . '\\' );\">' . $approveStr\n   . '</a></li>\n      <li><a title=\"' . $rejectStr . '\"  class=\"nav\" href=\"reject_entry.php?id='\n   . $id . $u_url . '&amp;type=E\" onclick=\"return confirm( \\''\n   . translate ( 'Reje",
+			"list",
+			"li",
+			"td",
+			"var",
+			"send_doctype",
+			"<head>",
+			"<html>",
+			"');\n",
+			"encoding",
+			"charset",
+			"k5n",
+			"webcalendar",
+			".kn"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "view_entry.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 41978,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								32892,
+								32892
+							]
+						],
+						"settings":
+						{
+							"is_init_dirty_state": false,
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 13221.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "project.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 225.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
