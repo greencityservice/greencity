@@ -644,7 +644,7 @@ This will add the entry to your calendar.: 这將會新增这个事件到您的�
 Email all participants: 邮寄给所有的题者
 Hide activity log: 隐藏活动日志
 Show activity log: 显示活动日志
-Export this entry to: 输出此条目到
+Export this entry to: 导出此事件到
 
 ########################################
 # Page: week_details.php
