@@ -396,6 +396,7 @@ echo '
  . ( $is_assistant ? ' ( ' . translate ( 'Assistant mode' ) . ' )' : '' )
  . '</h2>';
 
+/*
 echo '
 <div class="ui one column middle aligned very relaxed stackable grid">
 <div class="column">
@@ -433,6 +434,7 @@ if ( ! empty ( $ALLOW_HTML_DESCRIPTION ) && $ALLOW_HTML_DESCRIPTION == 'Y' ) {
 </div>
 </div>
 ';
+*/
 
  echo '
     <table class="ui defination table">
@@ -966,6 +968,29 @@ $rdate = ( $event_repeats ? '&amp;date=' . $event_date : '' );
 
 $u_url = ( ! empty ( $user ) && $login != $user ? "&amp;user=$user" : '' );
 
+if ( access_can_access_function ( ACCESS_EXPORT ) &&
+    ( ( ! $is_private && ! $is_confidential ) || ! access_is_enabled () ) && !
+    $hide_details ) {
+  $exportStr = translate ( 'Export' );
+  $exportThisStr = translate ( 'Export this entry to' );
+  $palmStr = translate ( 'Palm Pilot' );
+  $selectStr = generate_export_select ();
+  $userStr = ( ! empty ( $user ) ? '<input type="hidden" name="user" value="' .
+    $user . '" />' : '' );
+  echo <<<EOT
+  <tr>
+        <td class="aligntop bold">{$exportThisStr}:</td>
+        <td>
+    <form method="post" name="exportform" action="export_handler.php">
+      {$selectStr}
+      <input type="hidden" name="id" value="{$id}" />
+          {$userStr}
+      <input type="submit" value="{$exportStr}" />
+    </form></td>
+        </tr>
+EOT;
+}
+
 echo '
     </table>
     <div class="ui horizontal divider">Action</div>
@@ -1147,27 +1172,6 @@ echo '';
 if ( $can_show_log && $show_log ) {
   $PAGE_SIZE = 25; // number of entries to show at once
   echo generate_activity_log ( $id );
-}
-
-if ( access_can_access_function ( ACCESS_EXPORT ) &&
-    ( ( ! $is_private && ! $is_confidential ) || ! access_is_enabled () ) && !
-    $hide_details ) {
-  $exportStr = translate ( 'Export' );
-  $exportThisStr = translate ( 'Export this entry to' );
-  $palmStr = translate ( 'Palm Pilot' );
-  $selectStr = generate_export_select ();
-  $userStr = ( ! empty ( $user ) ? '<input type="hidden" name="user" value="' .
-    $user . '" />' : '' );
-  echo <<<EOT
-    <br />
-    <form method="post" name="exportform" action="export_handler.php">
-      <label for="exformat">{$exportThisStr}:&nbsp;</label>
-      {$selectStr}
-      <input type="hidden" name="id" value="{$id}" />
-          {$userStr}
-      <input type="submit" value="{$exportStr}" />
-    </form>
-EOT;
 }
 
 echo print_trailer ( empty ( $friendly ) );
