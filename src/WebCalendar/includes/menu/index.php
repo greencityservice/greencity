@@ -666,11 +666,12 @@ $menuHtml .= '
           </td>' : '' ) . '
           <td class="ThemeMenubackgr ThemeMenu" align="right">'
  . ( ! empty ( $logout_url ) && $menuConfig['Login'] // Using http_auth.
-  ? '<a class="menuhref" title="'
+  ? '<label>'.translate ( 'Current User' ).': '
+     . ( $menuConfig['Login Fullname'] ? $fullname : $login ) . '</label> | '.
+     '<a class="menuhref" title="'
    . ( strlen ( $login ) && $login != '__public__'
     ? $logoutStr . '" href="' . $logout_url . '">' . $logoutStr
-     . ':</a>&nbsp;<label>'
-     . ( $menuConfig['Login Fullname'] ? $fullname : $login ) . '</label>'
+     . '</a>'
     : // For public user.
     $loginStr . '" href="' . $login_url . '">' . $loginStr . '</a>' )
   : '&nbsp;&nbsp;&nbsp;' // TODO replace with something???
