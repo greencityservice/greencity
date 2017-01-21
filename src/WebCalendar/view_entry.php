@@ -394,10 +394,50 @@ echo '
   ( $is_admin && ! empty ( $user ) && $user == '__public__' )
   ? '  ( ' . translate ( 'Admin mode' ) . ' )' : '' )
  . ( $is_assistant ? ' ( ' . translate ( 'Assistant mode' ) . ' )' : '' )
- . '</h2>
-    <table width="100%" summary="">
+ . '</h2>';
+
+echo '
+<div class="ui one column middle aligned very relaxed stackable grid">
+<div class="column">
+<div class="ui card">
+  <div class="content">
+    <div class="header">' . $name . ( $is_nonuser_admin ||
+  ( $is_admin && ! empty ( $user ) && $user == '__public__' )
+  ? '  ( ' . translate ( 'Admin mode' ) . ' )' : '' )
+ . ( $is_assistant ? ' ( ' . translate ( 'Assistant mode' ) . ' )' : '' )
+ . '</div>
+    <div class="meta">2 days ago</div>
+    <div class="meta">'.$location.'</div>
+    <div class="description">
+      <p>';
+if ( ! empty ( $ALLOW_HTML_DESCRIPTION ) && $ALLOW_HTML_DESCRIPTION == 'Y' ) {
+  $str = $description;
+  // $str = str_replace ( '&', '&amp;', $description );
+  $str = str_replace ( '&amp;amp;', '&amp;', $str );
+  // If there is no HTML found, then go ahead and replace
+  // the line breaks ("\n") with the HTML break.
+  echo ( strstr ( $str, '<' ) && strstr ( $str, '>' )
+    ? $str // found some html...
+    : nl2br ( activate_urls ( $str ) ) );
+} else
+  echo nl2br ( activate_urls ( htmlspecialchars ( $description ) ) );
+
+  echo '
+      </p>
+    </div>
+  </div>
+  <div class="extra content">
+    
+  </div>
+</div>
+</div>
+</div>
+';
+
+ echo '
+    <table class="ui defination table">
       <tr>
-        <td class="aligntop bold" width="10%">' . translate ( 'Description' )
+        <td class="aligntop bold two wide column">' . translate ( 'Description' )
  . ':</td>
         <td>';
 
@@ -928,7 +968,8 @@ $u_url = ( ! empty ( $user ) && $login != $user ? "&amp;user=$user" : '' );
 
 echo '
     </table>
-    <ul class="nav">';
+    <div class="ui horizontal divider">Action</div>
+    ';
 
 // Show a printer-friendly link
 if ( empty ( $friendly ) )
@@ -939,14 +980,14 @@ if ( ( $is_my_event || $is_nonuser_admin || $is_assistant || $can_approve ) &&
   $approveStr = translate ( 'Approve/Confirm entry' );
   $rejectStr = translate ( 'Reject entry' );
   echo '
-      <li><a title="' . $approveStr . '" class="nav" href="approve_entry.php?id='
+      <a title="' . $approveStr . '" class="ui positive button" href="approve_entry.php?id='
    . $id . $u_url . '&amp;type=E" onclick="return confirm( \''
    . translate ( 'Approve this entry?', true ) . '\' );">' . $approveStr
-   . '</a></li>
-      <li><a title="' . $rejectStr . '"  class="nav" href="reject_entry.php?id='
+   . '</a>
+      <a title="' . $rejectStr . '"  class="ui red button" href="reject_entry.php?id='
    . $id . $u_url . '&amp;type=E" onclick="return confirm( \''
    . translate ( 'Reject this entry?', true ) . '\' );">' . $rejectStr
-   . '</a></li>';
+   . '</a>';
 }
 // TODO add these permissions to the UAC list
 $can_add_attach = ( Doc::attachmentsEnabled () && $login != '__public__'
@@ -960,19 +1001,19 @@ $can_add_comment = ( Doc::commentsEnabled () && $login != '__public__'
 if ( $can_add_attach && $event_status != 'D' ) {
   $addAttchStr = translate ( 'Add Attachment' );
   echo '
-      <li><a title="' . $addAttchStr
-   . '" class="nav" href="docadd.php?type=A&amp;id=' . $id
+      <a title="' . $addAttchStr
+   . '" class="ui brown button" href="docadd.php?type=A&amp;id=' . $id
    . $u_url . '">' . $addAttchStr
-   . '</a></li>';
+   . '</a>';
 }
 
 if ( $can_add_comment && $event_status != 'D' ) {
   $addCommentStr = translate ( 'Add Comment' );
   echo '
-      <li><a title="' . $addCommentStr
-   . '" class="nav" href="docadd.php?type=C&amp;id=' . $id
+      <a title="' . $addCommentStr
+   . '" class="ui brown button" href="docadd.php?type=C&amp;id=' . $id
    . $u_url . '">' . $addCommentStr
-   . '</a></li>';
+   . '</a>';
 }
 
 // If approved, but event category not set (and user does not have permission
@@ -983,8 +1024,8 @@ if ( empty ( $user ) && $CATEGORIES_ENABLED == 'Y' && $readonly != 'Y' &&
     $is_nonuser && $event_status != 'D' && ! $can_edit ) {
   $setCatStr = translate ( 'Set category' );
   echo '
-      <li><a title="' . $setCatStr . '" class="nav" href="set_entry_cat.php?id='
-   . $id . $rdate . '">' . $setCatStr . '</a></li>';
+      <a title="' . $setCatStr . '" class="ui teal button" href="set_entry_cat.php?id='
+   . $id . $rdate . '">' . $setCatStr . '</a>';
 }
 
 $addToMineStr = translate ( 'Add to My Calendar' );
@@ -1000,30 +1041,30 @@ if ( $can_edit && $event_status != 'D' && ! $is_nonuser && $readonly != 'Y' ) {
     $editAllDatesStr = translate ( 'Edit repeating entry for all dates' );
     $deleteAllDatesStr = translate ( 'Delete repeating event for all dates' );
     echo '
-      <li><a title="' . $editAllDatesStr
-     . '" class="nav" href="edit_entry.php?id=' . $id . $u_url . '">'
-     . $editAllDatesStr . '</a></li>';
+      <a title="' . $editAllDatesStr
+     . '" class="ui orange button" href="edit_entry.php?id=' . $id . $u_url . '">'
+     . $editAllDatesStr . '</a>';
     // Don't allow override of first event
     if ( ! empty ( $date ) && $date != $orig_date ) {
       $editThisDateStr = translate ( 'Edit entry for this date' );
       echo '
-      <li><a title="' . $editThisDateStr . '" class="nav" '
+      <a title="' . $editThisDateStr . '" class="ui orange button" '
        . 'href="edit_entry.php?id=' . $id . $u_url . $rdate . '&amp;override=1">'
-       . $editThisDateStr . '</a></li>';
+       . $editThisDateStr . '</a>';
     }
     echo '
-      <li><a title="' . $deleteAllDatesStr
-     . '" class="nav" href="del_entry.php?id=' . $id . $u_url
+      <a title="' . $deleteAllDatesStr
+     . '" class="ui red button" href="del_entry.php?id=' . $id . $u_url
      . '&amp;override=1" onclick="return confirm( \'' . $areYouSureStr . "\\n\\n"
-     . $deleteAllStr . '\' );">' . $deleteAllDatesStr . '</a></li>';
+     . $deleteAllStr . '\' );">' . $deleteAllDatesStr . '</a>';
     // Don't allow deletion of first event
     if ( ! empty ( $date ) && $date != $orig_date ) {
       $deleteOnlyStr = translate ( 'Delete entry only for this date' );
       echo '
-      <li><a title="' . $deleteOnlyStr . '" class="nav" href="del_entry.php?id='
+      <a title="' . $deleteOnlyStr . '" class="ui red button" href="del_entry.php?id='
        . $id . $u_url . $rdate . '&amp;override=1" onclick="return confirm( \''
        . $areYouSureStr . "\\n\\n" . $deleteAllStr . '\' );">' . $deleteOnlyStr
-       . '</a></li>';
+       . '</a>';
     }
   } else {
     if ( ! empty( $user ) && $user != $login && ! $is_assistant ) {
@@ -1034,26 +1075,25 @@ if ( $can_edit && $event_status != 'D' && ! $is_nonuser && $readonly != 'Y' ) {
       $delete_str = $deleteEntryStr;
     }
     echo '
-      <li><a title="' . $editEntryStr . '" class="nav" href="edit_entry.php?id='
-     . $id . $u_url . '">' . $editEntryStr . '</a></li>
-      <li><a title="' . $delete_str . '" class="nav" href="del_entry.php?id='
+      <a title="' . $editEntryStr . '" class="ui orange button" href="edit_entry.php?id='
+     . $id . $u_url . '">' . $editEntryStr . '</a><a title="' . $delete_str . '" class="ui red button" href="del_entry.php?id='
      . $id . $u_url . $rdate . '" onclick="return confirm( \'' . $areYouSureStr
      . "\\n\\n"
      . ( empty ( $user ) || $user == $login || $is_assistant
       ? $deleteAllStr : '' )
      . '\' );">' . $delete_str;
-    echo '</a></li>';
+    echo '</a>';
   }
   echo '
-      <li><a title="' . $copyStr . '" class="nav" href="edit_entry.php?id='
-   . $id . $u_url . '&amp;copy=1">' . $copyStr . '</a></li>';
+      <a title="' . $copyStr . '" class="ui blue button" href="edit_entry.php?id='
+   . $id . $u_url . '&amp;copy=1">' . $copyStr . '</a>';
 } elseif ( $readonly != 'Y' &&
   ( $is_my_event || $is_nonuser_admin || $can_edit ) &&
     ( $login != '__public__' ) && ! $is_nonuser && $event_status != 'D' ) {
   $delFromCalStr =
   translate ( 'This will delete the entry from your XXX calendar.', true );
   echo '
-      <li><a title="' . $deleteEntryStr . '" class="nav" href="del_entry.php?id='
+      <a title="' . $deleteEntryStr . '" class="ui red button" href="del_entry.php?id='
    . $id . $u_url . $rdate . '" onclick="return confirm( \'' . $areYouSureStr
    . "\\n\\n"
    . str_replace ( 'XXX ',
@@ -1064,8 +1104,7 @@ if ( $can_edit && $event_status != 'D' && ! $is_nonuser && $readonly != 'Y' ) {
   . '\' );">'
    . $deleteEntryStr
    . ( $is_assistant ? ' ' . translate ( 'from your boss calendar' ) : '' )
-   . '</a></li>
-      <li><a title="' . $copyStr . '" class="nav" href="edit_entry.php?id='
+   . '</a><a title="' . $copyStr . '" class="ui blue button" href="edit_entry.php?id='
    . $id . '&amp;copy=1">' . $copyStr . '</a></li>';
 }
 
@@ -1073,18 +1112,18 @@ if ( $readonly != 'Y' && ! $is_my_event && ! $is_private && !
   $is_confidential && $event_status != 'D' && $login != '__public__' && !
   $is_nonuser )
   echo '
-      <li><a title="' . $addToMineStr . '" class="nav" href="add_entry.php?id='
+      <a title="' . $addToMineStr . '" class="ui positive button" href="add_entry.php?id='
    . $id . '" onclick="return confirm( \''
    . translate ( 'Do you want to add this entry to your calendar?', true )
    . "\\n\\n" . translate ( 'This will add the entry to your calendar.', true )
-   . '\' );">' . $addToMineStr . '</a></li>';
+   . '\' );">' . $addToMineStr . '</a>';
 
 if ( $login != '__public__' && count ( $allmails ) > 0 ) {
   $emailAllStr = translate ( 'Email all participants' );
   echo '
-      <li><a title="' . $emailAllStr . '" class="nav" href="mailto:'
+      <a title="' . $emailAllStr . '" class="button" href="mailto:'
    . implode ( ',', $allmails ) . '?subject=' . rawurlencode ( $subject ) . '">'
-   . $emailAllStr . '</a></li>';
+   . $emailAllStr . '</a>';
 }
 
 $can_show_log = $is_admin; // default if access control is not enabled
@@ -1095,17 +1134,16 @@ if ( $can_show_log ) {
   $hideActivityStr = translate ( 'Hide activity log' );
   $showActivityStr = translate ( 'Show activity log' );
   echo '
-      <li><a title="'
+      <a title="'
    . ( ! $show_log
-    ? $showActivityStr . '" class="nav" href="view_entry.php?id=' . $id
+    ? $showActivityStr . '" class="ui violet button" href="view_entry.php?id=' . $id
      . '&amp;log=1">' . $showActivityStr
-    : $hideActivityStr . '" class="nav" href="view_entry.php?id=' . $id . '">'
+    : $hideActivityStr . '" class="ui violet button" href="view_entry.php?id=' . $id . '">'
      . $hideActivityStr )
-   . '</a></li>';
+   . '</a>';
 }
 
-echo '
-    </ul>';
+echo '';
 if ( $can_show_log && $show_log ) {
   $PAGE_SIZE = 25; // number of entries to show at once
   echo generate_activity_log ( $id );
