@@ -608,8 +608,10 @@ if ( $can_edit ) {
               <td style="width:20%" class="tooltip" title="'
    . tooltip ( 'brief-description-help' ) . '"><label for="entry_brief">'
    . translate ( 'Brief Description' ) . ':</label></td>
-              <td colspan="2"><input type="text" name="name" id="entry_brief" '
-   . 'size="25" value="' . htmlspecialchars ( $name ) . '" /></td>
+              <td colspan="2">
+              <div class="ui input">
+              <input type="text" name="name" id="entry_brief" '
+   . 'size="45" value="' . htmlspecialchars ( $name ) . '" /></div></td>
             </tr>
             <tr>
               <td class="tooltip aligntop" title="'
@@ -691,9 +693,12 @@ if ( $can_edit ) {
               <td class="tooltip" title="' . tooltip ( 'location-help' )
      . '"><label for="entry_location">' . translate ( 'Location' )
      . ':</label></td>
-              <td colspan="2"><input type="text" name="location" onchange="codeAddress()" '
+              <td colspan="2">
+              <div class="ui icon input loading">
+              <input type="text" name="location" onchange="codeAddress()" '
      . 'id="entry_location" size="45" value="' . htmlspecialchars ( $location )
-     . '" /><div class="ui active inline small loader" id="addrLoader" style="margin-left:10px"></div></td>
+     . '" /><i class="search icon" id="addrLoader"></i>
+              </td>
             </tr>' : '' ) . ( $DISABLE_URL_FIELD != 'Y' ? '
             <tr>
               <td class="tooltip" title="' . tooltip ( 'url-help' )
@@ -1052,7 +1057,7 @@ echo '
     <div id="tabscontent_participants">' : '
     <fieldset>
       <legend>' . translate ( 'Participants' ) . '</legend>' ) . '
-      <table>';
+      <table style="max-width:450px;">';
   // .
   // Only ask for participants if we are multi-user.
   $show_participants = ( $DISABLE_PARTICIPANTS_FIELD != 'Y' );
@@ -1106,12 +1111,16 @@ echo '
     elseif ( $size > 5 )
       $size = 5;
 
-    echo '
+    echo '<script>
+            $(function(){
+              $("#entry_part").dropdown();
+            })
+          </script>
         <tr title="' . tooltip ( 'participants-help' ) . '">
-          <td class="tooltipselect"><label for="entry_part">'
+          <td style="width:20%" class="tooltipselect"><label for="entry_part">'
      . translate ( 'Participants' ) . ':</label></td>
           <td>
-            <select name="participants[]" id="entry_part" size="' . $size
+            <select class="ui dropdown" name="participants[]" id="entry_part" size="' . $size
      . '" multiple="multiple">' . $users . '
             </select>' . ( $GROUPS_ENABLED == 'Y' ? '
             <input type="button" onclick="selectUsers()" value="'
