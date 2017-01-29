@@ -551,11 +551,20 @@ echo ( $DISABLE_PRIORITY_FIELD != 'Y' ? '
     : ( $cal_access == 'C'
       ? translate ( 'Confidential' )
       : translate ( 'Private' ) ) ) . '</td>
-      </tr>' : '' ) . ( $CATEGORIES_ENABLED == 'Y' && ! empty ( $category ) ? '
+      </tr>' : '' );
+
+if ( $CATEGORIES_ENABLED == 'Y' && ! empty ( $category )) {
+    echo '
       <tr>
         <td class="aligntop bold">' . translate ( 'Category' ) . ':</td>
-        <td>' . $category . '</td>
-      </tr>' : '' );
+        <td>';
+    foreach($categories as $c){
+      echo '<div class="ui blue label">'.$c.'</div>';
+    }
+    //echo $category; 
+    echo '</td>
+      </tr>' ;
+}
 
 // Display who originally created event
 // useful if assistant or Admin
@@ -1197,7 +1206,7 @@ if ( $readonly != 'Y' && ! $is_my_event && ! $is_private && !
 if ( $login != '__public__' && count ( $allmails ) > 0 ) {
   $emailAllStr = translate ( 'Email all participants' );
   echo '
-      <a title="' . $emailAllStr . '" class="button" href="mailto:'
+      <a title="' . $emailAllStr . '" class="ui green button" href="mailto:'
    . implode ( ',', $allmails ) . '?subject=' . rawurlencode ( $subject ) . '">'
    . $emailAllStr . '</a>';
 }
