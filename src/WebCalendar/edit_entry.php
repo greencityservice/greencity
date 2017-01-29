@@ -603,9 +603,9 @@ if ( $can_edit ) {
         <div id="tabscontent_details">' : '
       <fieldset>
         <legend>' . translate ( 'Details' ) . '</legend>' ) . '
-          <table border="0" summary="">
+          <table border="0" summary="" style="max-width:450px; float:left">
             <tr>
-              <td style="width:14%;" class="tooltip" title="'
+              <td style="width:20%" class="tooltip" title="'
    . tooltip ( 'brief-description-help' ) . '"><label for="entry_brief">'
    . translate ( 'Brief Description' ) . ':</label></td>
               <td colspan="2"><input type="text" name="name" id="entry_brief" '
@@ -621,72 +621,7 @@ if ( $can_edit ) {
             </tr>
             <tr>
               <td colspan="2"' : '
-              <td' ) . ' class="aligntop">'
-   . ( ! empty ( $categories ) || $DISABLE_ACCESS_FIELD != 'Y' ||
-    ( $DISABLE_PRIORITY_FIELD != 'Y' )
-    /* New table for extra fields. */ ? '
-                <table border="0" width="90%" summary="">' : '' )
-   . ( $DISABLE_ACCESS_FIELD != 'Y' ? '
-                  <tr>
-                    <td class="tooltip" title="' . tooltip ( 'access-help' )
-     . '"><label for="entry_access">' . translate ( 'Access' ) . ':</label></td>
-                    <td width="80%">
-                      <select name="access" id="entry_access">
-                        <option value="P"' . ( $access == 'P' || !
-      strlen ( $access ) ? $selected : '' ) . '>' . translate ( 'Public' )
-     . '</option>
-                        <option value="R"' . ( $access == 'R' ? $selected : '' )
-     . '>' . translate ( 'Private' ) . '</option>
-                        <option value="C"' . ( $access == 'C' ? $selected : '' )
-     . '>' . translate ( 'Confidential' ) . '</option>
-                      </select>
-                    </td>
-                  </tr>' : '' );
-
-  if ( $DISABLE_PRIORITY_FIELD != 'Y' ) {
-    echo '
-                  <tr>
-                    <td class="tooltip" title="' . tooltip ( 'priority-help' )
-     . '"><label for="entry_prio">' . translate ( 'Priority' )
-     . ':&nbsp;</label></td>
-                    <td>
-                      <select name="priority" id="entry_prio">';
-    $pri = array ( '',
-      translate ( 'High' ),
-      translate ( 'Medium' ),
-      translate ( 'Low' ) );
-
-    for ( $i = 1; $i <= 9; $i++ ) {
-      echo '
-                        <option value="' . $i . '"'
-       . ( $priority == $i ? $selected : '' )
-       . '>' . $i . '-' . $pri[ceil ( $i / 3 )] . '</option>';
-    }
-    echo '
-                      </select>
-                    </td>
-                  </tr>';
-  }
-  echo ( ! empty ( $categories ) && $CATEGORIES_ENABLED == 'Y' ? '
-                  <tr>
-                    <td class="tooltip" title="' . tooltip ( 'category-help' )
-     . '" valign="top">
-                      <label for="entry_categories">' . translate ( 'Category' )
-     . ':<br /></label>
-                      <input type="button" value="' . translate ( 'Edit' )
-     . '" onclick="editCats( event )" />
-                    </td>
-                    <td valign="top">
-                      <input readonly="readonly" type="text" name="catnames" '
-     . 'id="entry_categories" value="' . $catNames
-     . '" size="30" onclick="editCats( event )"/>
-                      <input type="hidden" name="cat_id" value="' . $catList
-     . '" />
-                    </td>
-                  </tr>' : '' )
-   . ( ! empty ( $categories ) || $DISABLE_ACCESS_FIELD != 'Y' ||
-    ( $DISABLE_PRIORITY_FIELD != 'Y' ) ? '
-                </table>' : '' );
+              <td' ) . ' class="aligntop">';
 
   if ( $eType == 'task' ) { // Only for tasks.
     $completed_visible = ( strlen ( $completed ) ? 'visible' : 'hidden' );
@@ -756,9 +691,9 @@ if ( $can_edit ) {
               <td class="tooltip" title="' . tooltip ( 'location-help' )
      . '"><label for="entry_location">' . translate ( 'Location' )
      . ':</label></td>
-              <td colspan="2"><input type="text" name="location" '
-     . 'id="entry_location" size="55" value="' . htmlspecialchars ( $location )
-     . '" /></td>
+              <td colspan="2"><input type="text" name="location" onchange="codeAddress()" '
+     . 'id="entry_location" size="45" value="' . htmlspecialchars ( $location )
+     . '" /><div class="ui active inline small loader" id="addrLoader" style="margin-left:10px"></div></td>
             </tr>' : '' ) . ( $DISABLE_URL_FIELD != 'Y' ? '
             <tr>
               <td class="tooltip" title="' . tooltip ( 'url-help' )
@@ -856,6 +791,65 @@ if ( $can_edit ) {
           <td colspan="2">' . time_selection ( 'due_', $due_time ) . '</td>
         </tr>';
   }
+
+  echo ( $DISABLE_ACCESS_FIELD != 'Y' ? '
+                  <tr>
+                    <td class="tooltip" title="' . tooltip ( 'access-help' )
+     . '"><label for="entry_access">' . translate ( 'Access' ) . ':</label></td>
+                    <td width="80%">
+                      <select name="access" id="entry_access">
+                        <option value="P"' . ( $access == 'P' || !
+      strlen ( $access ) ? $selected : '' ) . '>' . translate ( 'Public' )
+     . '</option>
+                        <option value="R"' . ( $access == 'R' ? $selected : '' )
+     . '>' . translate ( 'Private' ) . '</option>
+                        <option value="C"' . ( $access == 'C' ? $selected : '' )
+     . '>' . translate ( 'Confidential' ) . '</option>
+                      </select>
+                    </td>
+                  </tr>' : '' );
+
+  if ( $DISABLE_PRIORITY_FIELD != 'Y' ) {
+    echo '
+                  <tr>
+                    <td class="tooltip" title="' . tooltip ( 'priority-help' )
+     . '"><label for="entry_prio">' . translate ( 'Priority' )
+     . ':&nbsp;</label></td>
+                    <td>
+                      <select name="priority" id="entry_prio">';
+    $pri = array ( '',
+      translate ( 'High' ),
+      translate ( 'Medium' ),
+      translate ( 'Low' ) );
+
+    for ( $i = 1; $i <= 9; $i++ ) {
+      echo '
+                        <option value="' . $i . '"'
+       . ( $priority == $i ? $selected : '' )
+       . '>' . $i . '-' . $pri[ceil ( $i / 3 )] . '</option>';
+    }
+    echo '
+                      </select>
+                    </td>
+                  </tr>';
+  }
+  echo ( ! empty ( $categories ) && $CATEGORIES_ENABLED == 'Y' ? '
+                  <tr>
+                    <td class="tooltip" title="' . tooltip ( 'category-help' )
+     . '" valign="top">
+                      <label for="entry_categories">' . translate ( 'Category' )
+     . ':</label>
+                    </td>
+                    <td valign="top">
+                      <input readonly="readonly" type="text" name="catnames" '
+     . 'id="entry_categories" value="' . $catNames
+     . '" size="30" onclick="editCats( event )"/>
+                      <input type="button" value="' . translate ( 'Edit' )
+     . '" onclick="editCats( event )" />
+                      <input type="hidden" name="cat_id" value="' . $catList
+     . '" />
+                    </td>
+                  </tr>' : '' );
 
   // Site-specific extra fields (see site_extras.php).
   // load and display any site-specific fields.
@@ -992,6 +986,62 @@ if ( $can_edit ) {
       </div>' );
   }
   // end site-specific extra fields
+
+   // ------ Google Maps Start------
+echo '
+  <script>
+    var geocoder;
+  var map;
+  var marker;
+  var locationTimeoutId = 0;
+  function initMap() {
+    geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(-37.8136280, 144.9630580);
+    var mapOptions = {
+      zoom: 15,
+      center: latlng
+    }
+    map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    codeAddress();
+    $("#entry_location").keypress(function () { 
+        clearTimeout(locationTimeoutId); // doesnt matter if its 0
+        locationTimeoutId = setTimeout(codeAddress, 500);
+    });
+  }
+
+  function codeAddress() {
+    $("#addrLoader").show();
+    var address = document.getElementById("entry_location").value;
+    geocoder.geocode( { "address": address}, function(results, status) {
+      $("#addrLoader").hide();
+      if (status == "OK") {
+        map.setCenter(results[0].geometry.location);
+        clearMarker();
+        marker = new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location
+        });
+      } else {
+        //alert("Geocode was not successful for the following reason: " + status);
+        clearMarker();
+      }
+    });
+  }
+
+  function clearMarker() {
+        if (marker != null)
+        {
+          marker.setMap(null);
+          marker = null;
+        }
+  }
+</script>
+<script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRcQ7L8uEzr9RCt6jXMlyK5qvl4q0RCAk&callback=initMap">
+    </script>
+<div style="float:left;padding-top:20px"><div id="map" style="width: 400px; height: 350px;"></div></div>
+<div style="clear:both"></div>';
+   // ------ Google Maps End--------
 
   echo ( $useTabs ? '
     </div>' : '
@@ -1595,20 +1645,8 @@ if ( $can_edit ) {
 <!-- End tabscontent -->';
 
   echo '
-      <table summary="">
-        <tr>
-          <td>
-            <script type="text/javascript">
-<!-- <![CDATA[
-              document.writeln ( \'<input type="button" value="'
-     . $saveStr . '" onclick="validate_and_submit()" />\' )
-//]]> -->
-            </script>
-            <noscript><input type="submit" value="' . $saveStr
-     . '" /></noscript>
-          </td>
-        </tr>
-      </table>
+      <input class="ui blue button" type="submit" value="' . $saveStr
+     . '" />
       <input type="hidden" name="participant_list" value="" />'
   // This bit should be moved to a webcal_fckconfig.js file.
   // Then the current FCKEditor SVN version would probably work.
@@ -1623,11 +1661,11 @@ if ( $can_edit ) {
         myFCKeditor.Config[\'SkinPath\'] = \'./skins/office2003/\';
         myFCKeditor.ReplaceTextarea ();
       </script>' : '' ) . '
-    </form>';
+    ';
 
   if ( $id > 0 && ( $login == $create_by || $single_user == 'Y' || $is_admin ) )
     echo '
-    <a href="del_entry.php?id=' . $id . '" onclick="return confirm( \''
+    <a class="ui red button" href="del_entry.php?id=' . $id . '" onclick="return confirm( \''
      . str_replace ( 'XXX', translate ( 'entry' ),
       translate ( 'Are you sure you want to delete this XXX?' ) ) . '\' );">'
      . translate ( 'Delete entry' ) . '</a><br />';
@@ -1636,6 +1674,8 @@ if ( $can_edit ) {
   echo str_replace ( 'XXX', translate ( 'entry' ),
     translate ( 'You are not authorized to edit this XXX.' ) );
 // end if ( $can_edit )
+
+echo '</form>';
 
 ob_end_flush ();
 
