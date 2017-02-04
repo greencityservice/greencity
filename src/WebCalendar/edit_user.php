@@ -85,6 +85,13 @@ if ( ! empty ( $error ) ) {
   <input type="text" name="uemail" id="uemail" size="20" value="<?php echo
   empty ( $uemail ) ? '' : htmlspecialchars ( $uemail );?>" onchange="check_uemail();" />
  </td></tr>
+
+ <tr><td>
+   <label for="umobile"><?php etranslate("Mobile Number")?>:</label></td><td>
+   <input type="text" name="umobile" id="umoblie" size="20" value="<?php echo 
+   empty( $umobile)? '' : htmlspecialchars( $umobile ); ?>" onchange="check_umobile();"/>
+ </tr></td>   
+
 <?php if ( empty ( $user ) && ! $use_http_auth && $user_can_update_password ) { ?>
  <tr><td>
   <label for="pass1"><?php etranslate ( 'Password' )?>:</label></td><td>

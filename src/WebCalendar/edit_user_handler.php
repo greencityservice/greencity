@@ -15,6 +15,7 @@ $user = getPostValue ( 'user' );
 $ufirstname = getPostValue ( 'ufirstname' );
 $ulastname = getPostValue ( 'ulastname' );
 $uemail = getPostValue ( 'uemail' );
+$umobile = getPostValue( 'umobile');
 $upassword1 = getPostValue ( 'upassword1' );
 $upassword2 = getPostValue ( 'upassword2' );
 $uis_admin = getPostValue ( 'uis_admin' );
@@ -94,7 +95,7 @@ if ( ! empty ( $delete ) && $formtype == 'edituser' ) {
               $error = $blankUserStr;
             else {
               user_add_user ( $user, $upassword1, $ufirstname, $ulastname,
-                $uemail, $uis_admin, $u_enabled );
+                $uemail, $umobile, $uis_admin, $uenabled);
               activity_log ( 0, $login, $user, LOG_USER_ADD,
                 "$ufirstname $ulastname"
                  . ( empty ( $uemail ) ? '' : " <$uemail>" ) );
@@ -112,7 +113,7 @@ if ( ! empty ( $delete ) && $formtype == 'edituser' ) {
             $uis_admin = 'N';
 
           user_update_user ( $user, $ufirstname, 
-					  $ulastname, $uemail, $uis_admin, $uenabled );
+					  $ulastname, $uemail, $umobile, $uis_admin, $uenabled );
           activity_log ( 0, $login, $user, LOG_USER_UPDATE,
             "$ufirstname $ulastname" . ( empty ( $uemail ) ? '' : " <$uemail>" ) );
         }

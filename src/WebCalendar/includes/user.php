@@ -149,13 +149,14 @@ function user_load_variables ( $login, $prefix ) {
     $GLOBALS[$prefix . 'lastname'] = '';
     $GLOBALS[$prefix . 'is_admin'] = 'N';
     $GLOBALS[$prefix . 'email'] = '';
+	$GLOBALS[$prefix . 'mobile'] = '';
     $GLOBALS[$prefix . 'fullname'] = ( $login == '__public__'?
-      $PUBLIC_ACCESS_FULLNAME : translate ( 'DEFAULT CONFIGURATION' ) );
+    $PUBLIC_ACCESS_FULLNAME : translate ( 'DEFAULT CONFIGURATION' ) );
     $GLOBALS[$prefix . 'password'] = '';
     return true;
   }
   $sql =
-    'SELECT cal_firstname, cal_lastname, cal_is_admin, cal_email, cal_passwd, ' .
+    'SELECT cal_firstname, cal_lastname, cal_is_admin, cal_email, cal_mobile, cal_passwd, ' .
     'cal_enabled FROM webcal_user WHERE cal_login = ?';
   $rows = dbi_get_cached_rows ( $sql, array ( $login ) );
   if ( $rows ) {
@@ -165,12 +166,13 @@ function user_load_variables ( $login, $prefix ) {
     $GLOBALS[$prefix . 'lastname'] = $row[1];
     $GLOBALS[$prefix . 'is_admin'] = $row[2];
     $GLOBALS[$prefix . 'email'] = empty ( $row[3] ) ? '' : $row[3];
+	$GLOBALS[$prefix . 'mobile'] = empty ( $row[4] ) ? '' : $row[4];
     if ( strlen ( $row[0] ) && strlen ( $row[1] ) )
       $GLOBALS[$prefix . 'fullname'] = "$row[0] $row[1]";
     else
       $GLOBALS[$prefix . 'fullname'] = $login;
-    $GLOBALS[$prefix . 'password'] = $row[4];
-    $GLOBALS[$prefix . 'enabled'] = $row[5];
+    $GLOBALS[$prefix . 'password'] = $row[5];
+    $GLOBALS[$prefix . 'enabled'] = $row[6];
     $ret = true;
   } else {
     return false;
@@ -195,7 +197,7 @@ function user_load_variables ( $login, $prefix ) {
  * @global string Error message
  */
 function user_add_user ( $user, $password, $firstname,
-  $lastname, $email, $admin, $enabled='Y' ) {
+  $lastname, $email, $mobile, $admin, $enabled='Y' ) {
   global $error;
 
   if ( $user == '__public__' ) {
@@ -207,6 +209,10 @@ function user_add_user ( $user, $password, $firstname,
     $uemail = $email;
   else
     $uemail = NULL;
+  if( strlen ( $mobile))
+	$umobile = $mobile;
+  else
+	$umobile = NULL; 
   if ( strlen ( $firstname ) )
     $ufirstname = $firstname;
   else
@@ -223,10 +229,10 @@ function user_add_user ( $user, $password, $firstname,
     $admin = 'N';
   $sql = 'INSERT INTO webcal_user ' .
     '( cal_login, cal_lastname, cal_firstname, ' .
-    'cal_is_admin, cal_passwd, cal_email ) ' .
-    'VALUES ( ?, ?, ?, ?, ?, ? )';
+    'cal_is_admin, cal_passwd, cal_email, cal_mobile ) ' .
+    'VALUES ( ?, ?, ?, ?, ?, ?, ? )';
   if ( ! dbi_execute ( $sql, array ( $user, $ulastname,
-    $ufirstname, $admin, $upassword, $uemail, $enabled ) ) ) {
+    $ufirstname, $admin, $upassword, $uemail, $umobile, $enabled ) ) ) {
     $error = db_error ();
     return false;
   }
@@ -248,7 +254,7 @@ function user_add_user ( $user, $password, $firstname,
  * @global string Error message
  */
 function user_update_user ( $user, $firstname, $lastname, $email, 
-  $admin, $enabled='Y' ) {
+  $mobile, $admin, $enabled='Y' ) {
   global $error;
 
   if ( $user == '__public__' ) {
@@ -259,6 +265,10 @@ function user_update_user ( $user, $firstname, $lastname, $email,
     $uemail = $email;
   else
     $uemail = NULL;
+  if ( strlen ( $mobile ))
+	$umobile = $mobile;
+  else 
+	 $umobile = NULL;
   if ( strlen ( $firstname ) )
     $ufirstname = $firstname;
   else
@@ -273,10 +283,10 @@ function user_update_user ( $user, $firstname, $lastname, $email,
     $enabled = 'N';
 		
   $sql = 'UPDATE webcal_user SET cal_lastname = ?, ' .
-    'cal_firstname = ?, cal_email = ?,' .
+    'cal_firstname = ?, cal_email = ?,' . 'cal_mobile = ?,'.
     'cal_is_admin = ?, cal_enabled = ? WHERE cal_login = ?';
   if ( ! dbi_execute ( $sql,
-    array ( $ulastname, $ufirstname, $uemail, $admin, $enabled, $user  ) ) ) {
+    array ( $ulastname, $ufirstname, $uemail, $umobile, $admin, $enabled, $user  ) ) ) {
     $error = db_error ();
     return false;
   }
