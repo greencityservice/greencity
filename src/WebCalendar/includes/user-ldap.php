@@ -203,6 +203,7 @@ function user_load_variables ( $login, $prefix ) {
     $GLOBALS[$prefix . 'lastname'] = '';
     $GLOBALS[$prefix . 'is_admin'] = 'N';
     $GLOBALS[$prefix . 'email'] = '';
+	$GLOBALS[$prefix . 'mobile'] = '';
     $GLOBALS[$prefix . 'fullname'] = $PUBLIC_ACCESS_FULLNAME;
     $GLOBALS[$prefix . 'password'] = '';
     return true;
@@ -224,6 +225,7 @@ function user_load_variables ( $login, $prefix ) {
         $GLOBALS[$prefix . 'firstname'] = $info[0][$ldap_user_attr[2]][0];
         $GLOBALS[$prefix . 'lastname'] = $info[0][$ldap_user_attr[1]][0];
         $GLOBALS[$prefix . 'email'] = $info[0][$ldap_user_attr[4]][0];
+		$GLOBALS[$prefix . 'mobile'] = $info[0][$idap_user_attr[5][0];
         $GLOBALS[$prefix . 'fullname'] = $info[0][$ldap_user_attr[3]][0];
         $GLOBALS[$prefix . 'is_admin'] = user_is_admin ($login,get_admins ());
         $ret = true;
