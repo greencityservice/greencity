@@ -1585,4 +1585,3 @@ Unapproved Events: 未核准的事件
 # Page: tools/send_reminders.php
 #
 Reminder: 提醒
->>>>>>> 6c6a258b3716a5ece8a1e655830173156ca596b0
