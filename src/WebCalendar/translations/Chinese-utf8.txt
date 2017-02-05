@@ -82,6 +82,9 @@ Delete Entries: 删除事件
 Unapproved Entries: 未批准事件
 System Log: 系统日志
 Security Audit: 安全审计
+Mobile Version: 移动版
+Desktop Version: 桌面版
+Upcoming Events: 近期事件：
 
 ########################################
 # Page: admin.php

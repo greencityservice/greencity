@@ -355,6 +355,9 @@ if ( $menuConfig['My Calendar'] ) {
   if ( $menuConfig['This Year'] && access_can_access_function ( ACCESS_YEAR ) )
     jscMenu_item ( 'year.png', 'This Year', $year_url );
 
+  if ( $menuConfig['This Year'] && access_can_access_function ( ACCESS_YEAR ) )
+    jscMenu_item ( 'today.png', 'Mobile Version', 'stream.php' );
+
   if ( ! empty ( $HOME_LINK ) && $menuConfig['Exit'] )
     jscMenu_item ( 'exit.png', 'Exit', $HOME_LINK );
 

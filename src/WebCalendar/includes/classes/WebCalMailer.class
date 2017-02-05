@@ -32,6 +32,7 @@ class WebCalMailer extends phpmailer {
     $this->SMTPAuth = ( $SMTP_AUTH == 'Y' ? true : false );
     $this->Username = $SMTP_USERNAME; // SMTP username.
     $this->Password = $SMTP_PASSWORD; // SMTP password.
+    // $this->SMTPDebug = 1;
   }
 
   /* Build email from single via single class call. */

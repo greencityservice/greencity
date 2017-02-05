@@ -5007,13 +5007,16 @@ function query_events ( $user, $want_repeated, $date_filter, $cat_id = '',
     }
   }
 
-  $rows = dbi_get_cached_rows ( $sql . ( $user == $login &&
+  $final_sql = $sql . ( $user == $login &&
       strlen ( $user ) && $PUBLIC_ACCESS_DEFAULT_VISIBLE == 'Y'
       ? 'OR weu.cal_login = \'__public__\' ' : '' )
      . ( strlen ( $user ) > 0 ? ') ' : '' ) . $date_filter
 
     // Now order the results by time, then name if not tasks.
-    . ( ! $is_task ? ' ORDER BY we.cal_time, we.cal_name' : '' ), $query_params );
+    . ( ! $is_task ? ' ORDER BY we.cal_time, we.cal_name' : '' );
+
+  $rows = dbi_get_cached_rows ( $final_sql, $query_params );
+
   if ( $rows ) {
     $i = 0;
     $checkdup_id = $first_i_this_id = -1;
