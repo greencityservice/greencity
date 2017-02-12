@@ -88,6 +88,12 @@ Security Audit: 安全审计
 Mobile Version: 移动版
 Desktop Version: 桌面版
 Upcoming Events: 近期事件
+#
+# 2017年2月12日补充
+#
+View Details: 查看详情
+I Will Attend: 我要参加
+Do you confirm that you will attend this event?: 你确定要参加此事件吗？
 
 ########################################
 # Page: admin.php

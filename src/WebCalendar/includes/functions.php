@@ -5013,7 +5013,7 @@ function query_events ( $user, $want_repeated, $date_filter, $cat_id = '',
      . ( strlen ( $user ) > 0 ? ') ' : '' ) . $date_filter
 
     // Now order the results by time, then name if not tasks.
-    . ( ! $is_task ? ' ORDER BY we.cal_time, we.cal_name' : '' );
+    . ( ! $is_task ? ' ORDER BY we.cal_date, we.cal_time, we.cal_name' : '' );
 
   $rows = dbi_get_cached_rows ( $final_sql, $query_params );
 
