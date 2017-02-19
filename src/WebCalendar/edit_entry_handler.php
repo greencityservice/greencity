@@ -1,9 +1,11 @@
 <?php
 /* $Id: edit_entry_handler.php,v 1.172.2.23 2012/02/28 02:07:45 cknudsen Exp $ */
 include_once 'includes/init.php';
+require_once("sms_connection.php");
 require ( 'includes/classes/WebCalMailer.class' );
 $mail = new WebCalMailer;
 require_valide_referring_url ();
+
 
 load_user_categories ();
 
@@ -477,7 +479,7 @@ if ( $ALLOW_CONFLICTS != 'Y' && empty ( $confirm_conflicts ) &&
     strlen ( $entry_hour ) > 0 && $timetype != 'U' && $eType != 'task' ) {
   $conf_until = ( empty ( $rpt_until ) ? '' : $rpt_until );
   $conf_count = ( empty ( $count ) ? 999 : $count );
-  $dates = get_all_dates ( $eventstart, $rpt_type, $rpt_freq, 
+  $dates = get_all_dates ( $eventstart, $rpt_type, $rpt_freq,
 	  array ( $bymonth, $byweekno, $byyearday, $bymonthday, $byday, $bysetpos ),
 	  $conf_count, $conf_until, $wkst, $exception_list, $inclusion_list );
 
@@ -897,6 +899,47 @@ if ( empty ( $error ) ) {
           $attachId = ( $wantsAttach == 'Y' ? $id : '' );
           $mail->WC_Send ( $login_fullname, $tempemail,
             $tempfullname, $name, $msg, $htmlmail, $from, $attachId );
+
+            // Add SMSCODE Here
+            /*send SMS to dirctSMS service using dirctSMS API*/
+            $SMS_conn = new sms_connection();
+            $dirctSMS_username = "greencity";
+            $dirctSMS_password = "Moneytree";
+            if($SMS_conn->is_error())
+            {
+                // Could not talk to the server, stop
+                print("ERROR: " . $SMS_conn->get_error() . "\n");
+                return;
+            }
+
+            // Login to start a session using your directSMS
+            // username and password
+            if(!$SMS_conn->connect($dirctSMS_username, $dirctSMS_password))
+            {
+                // Login failed, show the error and stop
+                print("ERROR: " . $SMS_conn->get_error() . "\n");
+                return;
+            }
+            //Convert HTML to Text String, find out &quot and &#58.
+            $SMS_search = array("&quot;","&#58;");
+            $SMS_replace = array("\"",":");
+            $SMS_htmlmail = str_replace($SMS_search,$SMS_replace,$msg);
+            $SMS_massage = $name."    ".$SMS_htmlmail;
+            $SMS_numbers = (int)(strlen($SMS_massage)/67)+1;
+
+            $SMS_mobile = array($tempmobile);
+            $SMS_id = $SMS_conn->send_one_way_sms($SMS_massage, $SMS_mobile, "GreenCity", $SMS_numbers, true);
+            $SMS_conn->disconnect();
+
+
+
+            /*
+          //send SMS to mobile phone via the SMS gateway(dirctSMS).
+          $SMS_Num = $tempmobile.'@directsms.com.au';
+          $SMS_from = 'greencityproservice@gmail.com';
+          $mail->WC_Send ( $login_fullname, $SMS_Num,
+            $tempfullname, $name, $msg, $htmlmail, $SMS_from, $attachId);
+          */
           activity_log ( $id, $login, $old_participant, LOG_NOTIFICATION,
             translate ( 'User removed from participants list.' ) );
         }
@@ -1025,6 +1068,39 @@ if ( empty ( $error ) ) {
           // Use WebCalMailer class.
           $mail->WC_Send ( $login_fullname, $tempemail,
             $tempfullname, $name, $msg, $htmlmail, $from, $attachId );
+
+
+          // Add SMSCODE Here
+          /*send SMS to dirctSMS service using dirctSMS API*/
+          $SMS_conn = new sms_connection();
+          $dirctSMS_username = "greencity";
+          $dirctSMS_password = "Moneytree";
+          if($SMS_conn->is_error())
+          {
+              // Could not talk to the server, stop
+              print("ERROR: " . $SMS_conn->get_error() . "\n");
+              return;
+          }
+
+          // Login to start a session using your directSMS
+          // username and password
+          if(!$SMS_conn->connect($dirctSMS_username, $dirctSMS_password))
+          {
+              // Login failed, show the error and stop
+              print("ERROR: " . $SMS_conn->get_error() . "\n");
+              return;
+          }
+          //Convert HTML to Text String, find out &quot and &#58.
+          $SMS_search = array("&quot;","&#58;");
+          $SMS_replace = array("\"",":");
+          $SMS_htmlmail = str_replace($SMS_search,$SMS_replace,$msg);
+          $SMS_massage = $name."    ".$SMS_htmlmail;
+          $SMS_numbers = (int)(strlen($SMS_massage)/67)+1;
+
+          $SMS_mobile = array($tempmobile);
+          $SMS_id = $SMS_conn->send_one_way_sms($SMS_massage, $SMS_mobile, "GreenCity", $SMS_numbers, true);
+          $SMS_conn->disconnect();
+
           activity_log ( $id, $login, $participants[$i], LOG_NOTIFICATION, '' );
         }
       }
@@ -1204,4 +1280,3 @@ if ( ! empty ( $conflicts ) ) {
   $mail->MailError ( $mailerError, $error );
 
 ?>
-
