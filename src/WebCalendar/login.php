@@ -225,10 +225,10 @@ if ( ! empty ( $CUSTOM_HEADER ) && $CUSTOM_HEADER == 'Y' ) {
 
 <div class="ui middle aligned center aligned grid">
   <div class="column">
-    <h2 class="ui teal image header">
-      <img style="height:60px; width:100px" src="images/gclogo.png" alt="Login" class="image"/>
+    <h2 class="ui blue image header">
+      <img class="ui small image" src="images/GreenCity_Logo.png" alt="Login"/>
       <div class="content">
-        Log-in to your account
+        <h2 class="blue-text text-darken-2">Log-in To Your Account</h2>
       </div>
     </h2>
     <form class="ui large form" name="login_form" id="login" action="login.php" method="post"
@@ -274,7 +274,7 @@ if ( ! empty ( $return_path ) ) {
    <?php etranslate ( 'Remember me' )?></label>
         </div>
         </div>
-        <input type="submit" class="ui fluid large teal submit button" tabindex="4" value="<?php etranslate ( 'Login' )?>">
+        <input type="submit" class="ui fluid blue large submit button" tabindex="4" value="<?php etranslate ( 'Login' )?>">
       </div>
     </form>
 
